@@ -27,7 +27,7 @@ jobs:
         id: grade
         uses: signalwire-academy/swaig-grader@v1
         with:
-          agent-file: agent.py
+          agent-file: solution/agent.py
           checks: |
             instantiate
             swml_valid
@@ -40,10 +40,10 @@ jobs:
           repository: signalwire-academy/progress-tracker
           event-type: grading-complete
           client-payload: |
-            {{
+            {
               "repo": "${{ github.repository }}",
               "student": "${{ github.repository_owner }}",
               "lab": "L1.2",
               "result": "${{ steps.grade.outcome }}",
               "sha": "${{ github.sha }}"
-            }}
+            }
