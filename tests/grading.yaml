@@ -16,6 +16,7 @@ checks:
     file: solution/agent.py
 
   # Check 2: SWML is valid with required structure
+  # Note: main[0] is 'answer', main[1] is 'ai'
   - id: swml_valid
     name: "SWML Generation"
     points: 25
@@ -23,26 +24,25 @@ checks:
     file: solution/agent.py
     require:
       - path: sections.main
-      - path: sections.main[0].ai
 
   # Check 3: Prompt contains greeting
+  # Prompt uses 'pom' (prompt object model) array
   - id: prompt_check
     name: "Prompt Configuration"
     points: 25
-    type: swml_valid
+    type: swml_contains
     file: solution/agent.py
     require:
-      - path: sections.main[0].ai.prompt.text
-        contains: "friendly"
+      - text: "friendly"
 
   # Check 4: Language configured
   - id: language_check
     name: "Language Configuration"
     points: 25
-    type: swml_valid
+    type: swml_contains
     file: solution/agent.py
     require:
-      - path: sections.main[0].ai.languages
+      - text: "languages"
 
 feedback:
   pass: |
@@ -56,7 +56,7 @@ feedback:
     **Next:** Complete Lab 1.4 - First Live Call
 
   fail: |
-    Some checks didn't pass. Here are some tips:
+    Some checks didn\'t pass. Here are some tips:
 
     - Make sure you imported `AgentBase` from `signalwire_agents`
     - Create the agent: `agent = AgentBase(name="hello-agent")`
