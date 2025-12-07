@@ -1,0 +1,65 @@
+# Grading configuration for Lab 1.2: Hello World Agent
+
+assignment:
+  id: L1.2
+  name: "Lab 1.2: Hello World Agent"
+  level: 1
+  type: lab
+  passing_score: 70
+
+checks:
+  # Check 1: Agent loads without errors
+  - id: instantiate
+    name: "Agent Instantiation"
+    points: 25
+    type: instantiate
+    file: solution/agent.py
+
+  # Check 2: SWML is valid with required structure
+  - id: swml_valid
+    name: "SWML Generation"
+    points: 25
+    type: swml_valid
+    file: solution/agent.py
+    require:
+      - path: sections.main
+      - path: sections.main[0].ai
+
+  # Check 3: Prompt contains greeting
+  - id: prompt_check
+    name: "Prompt Configuration"
+    points: 25
+    type: swml_valid
+    file: solution/agent.py
+    require:
+      - path: sections.main[0].ai.prompt.text
+        contains: "friendly"
+
+  # Check 4: Language configured
+  - id: language_check
+    name: "Language Configuration"
+    points: 25
+    type: swml_valid
+    file: solution/agent.py
+    require:
+      - path: sections.main[0].ai.languages
+
+feedback:
+  pass: |
+    Excellent work! Your Hello World agent is working correctly.
+
+    **What you demonstrated:**
+    - Creating an AgentBase instance
+    - Adding prompt sections
+    - Configuring voice and language
+
+    **Next:** Complete Lab 1.4 - First Live Call
+
+  fail: |
+    Some checks didn't pass. Here are some tips:
+
+    - Make sure you imported `AgentBase` from `signalwire_agents`
+    - Create the agent: `agent = AgentBase(name="hello-agent")`
+    - Add prompt: `agent.prompt_add_section("Role", "Your message...")`
+    - Add language: `agent.add_language("English", "en-US", "rime.spore")`
+    - Run `swaig-test solution/agent.py --dump-swml` to verify
